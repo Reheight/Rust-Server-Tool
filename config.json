@@ -8,7 +8,8 @@
       "ServerIdentifier": "SERVER NAME",
       "DiscordToken": "BOT TOKEN",
       "DiscordServerGuildID": "GUILD IDENTIFIER",
-      "MessageLogChannel": "CHANNEL IDENTIFIER"
+      "MessageLogChannel": "CHANNEL IDENTIFIER",
+      "EmbedColor": "#CE412B"
     },
     {
       "IP": "IP ADDRESS",
@@ -17,7 +18,8 @@
       "ServerIdentifier": "SERVER NAME",
       "DiscordToken": "BOT TOKEN",
       "DiscordServerGuildID": "GUILD IDENTIFIER",
-      "MessageLogChannel": "CHANNEL IDENTIFIER"
+      "MessageLogChannel": "CHANNEL IDENTIFIER",
+      "EmbedColor": "#CE412B"
     }
   ],
   "SteamAPIKey": "STEAM API KEY"
