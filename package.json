@@ -1,0 +1,16 @@
+{
+  "name": "rustchatlog",
+  "version": "1.0.0",
+  "description": "Log the chat of your server to a Discord channel, without causing strain to your server.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Reheight",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "node-fetch": "^2.6.1",
+    "rustrcon": "^1.0.2"
+  }
+}
