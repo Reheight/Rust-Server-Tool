@@ -1,1 +1,1 @@
-node install --save
+npm install --save
