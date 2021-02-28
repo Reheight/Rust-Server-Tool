@@ -50,7 +50,7 @@ config.Servers.forEach((server, index) => {
 
                 const messageLog = new Discord.MessageEmbed()
                     .setFooter(server.ServerIdentifier)
-                    .setColor("#CE412B")
+                    .setColor(server.EmbedColor)
                     .setDescription(
                         `[${cleanText(username)}](https://www.steamcommunity.com/profiles/${user}) - ${channel == 1 ? "Team" : "Global"} Chat\n\n` +
                         cleanText(chatmessage)
