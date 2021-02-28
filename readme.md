@@ -30,7 +30,7 @@ You will need to have Node JS installed on the machine that will be running this
 14. Paste this ID inside of the config where it says "DiscordServerGuildID".  
 15. Right click the channel where you want the messages to go in your Discord and select "Copy ID".  
 16. Paste this ID inside of your config where it says "MessageLogChannel".  
-17. Ensure you have RCON enabled correctly (Learn more \[here\](https://www.rustafied.com/how-to-host-your-own-rust-server) by looking at launch options).  
+17. Ensure you have RCON enabled correctly (Learn more [here](https://www.rustafied.com/how-to-host-your-own-rust-server) by looking at launch options).  
 18. Inside of the config replace "IP" with the IP to your Rust server, "Port" with the port your RCON is on, and "RconPassword" with the password you set for RCON.  
 19. Save the config file.  
 20. Run start.bat  
