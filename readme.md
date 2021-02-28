@@ -11,7 +11,7 @@ This utility will allow you to have your entire server chat dumped into a single
 The reason why this chat logger is going to be significantly better for you to use rather than using some other plugin for logging chat to Discord is that once you obtain a growing playerbase then you will begin to lag as chat becomes more active which will cause the plugin to work harder on sending messages to the Discord bot which will cause stress on the server. This chat logger however will take advantage of RCON and will run separately from the server, meaning the server won't lose a single ounce of performance with this.
   
 # Attention  
-You will need to have Node JS installed on the machine that will be running this! If you do not have that yet installed, then you may install it \[here\](https://nodejs.org/en/)!  
+You will need to have Node JS installed on the machine that will be running this! If you do not have that yet installed, then you may install it [here](https://nodejs.org/en/)!  
   
 # Setup  
 1. Open config.yml with a file editor.  
