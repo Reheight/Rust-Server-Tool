@@ -37,28 +37,30 @@ You will need to have Node JS installed on the machine that will be running this
   
 # Configuration  
 ```  
-{  
-  "INFORMATION": "You will need to obtain a Discord Bot Token (https://discord.com/developers/applications) and a Steam API Key (https://steamcommunity.com/dev/apikey) from the links provided!",  
-  "Servers": [  
-    {  
-      "IP": "IP ADDRESS",  
-      "Port": 28016,  
-      "RconPassword": "PASSWORD",  
-      "ServerIdentifier": "SERVER NAME",  
-      "DiscordToken": "BOT TOKEN",  
-      "DiscordServerGuildID": "GUILD IDENTIFIER",  
-      "MessageLogChannel": "CHANNEL IDENTIFIER"  
-    },  
-    {  
-      "IP": "IP ADDRESS",  
-      "Port": 28016,  
-      "RconPassword": "PASSWORD",  
-      "ServerIdentifier": "SERVER NAME",  
-      "DiscordToken": "BOT TOKEN",  
-      "DiscordServerGuildID": "GUILD IDENTIFIER",  
-      "MessageLogChannel": "CHANNEL IDENTIFIER"  
-    }  
-  ],  
-  "SteamAPIKey": "STEAM API KEY"  
-}  
+{
+  "INFORMATION": "You will need to obtain a Discord Bot Token (https://discord.com/developers/applications) and a Steam API Key (https://steamcommunity.com/dev/apikey) from the links provided!",
+  "Servers": [
+    {
+      "IP": "IP ADDRESS",
+      "Port": 28016,
+      "RconPassword": "PASSWORD",
+      "ServerIdentifier": "SERVER NAME",
+      "DiscordToken": "BOT TOKEN",
+      "DiscordServerGuildID": "GUILD IDENTIFIER",
+      "MessageLogChannel": "CHANNEL IDENTIFIER",
+      "EmbedColor": "#CE412B"
+    },
+    {
+      "IP": "IP ADDRESS",
+      "Port": 28016,
+      "RconPassword": "PASSWORD",
+      "ServerIdentifier": "SERVER NAME",
+      "DiscordToken": "BOT TOKEN",
+      "DiscordServerGuildID": "GUILD IDENTIFIER",
+      "MessageLogChannel": "CHANNEL IDENTIFIER",
+      "EmbedColor": "#CE412B"
+    }
+  ],
+  "SteamAPIKey": "STEAM API KEY"
+}
 ```
