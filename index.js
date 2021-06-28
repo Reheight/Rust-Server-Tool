@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const config = require("./config");
 
 config.Servers.forEach((server, index) => {
-    server.name = `${server.IP}:${server.Port}/${index}`;
+    server.name = `${server.IP}:${server.Port} (#${index + 1})`;
     server.rcon = new Client({
         ip: server.IP,
         port: server.Port,
@@ -13,40 +13,92 @@ config.Servers.forEach((server, index) => {
     server.connected = false;
     server.bot = new Discord.Client();
     server.bot.login(server.DiscordToken);
+	server.playerCountUpdate = null;
+    
+    server.scheduler = null;
 
     server.bot.on('ready', () => {
-        console.log(`Successfully launched: ${server.bot.user.tag}`);
-        server.bot.user.setActivity("Attempting connection...");
+        console.log(`[${server.bot.user.tag}] Successfully launched...`);
         attemptConnection();
     });
 
     server.rcon.on('connected', () => {
-        console.log(`Successfully connected to ${server.rcon.ws.ip}:${server.rcon.ws.port}`);
+        server.connected = true;
 
-        server.bot.user.setActivity("Monitoring chat...");
+        console.log(`[${server.bot.user.tag}] Successfully connected to ${server.rcon.ws.ip}:${server.rcon.ws.port}`);
+
+        const onlineEmbed = new Discord.MessageEmbed()
+            .setTitle("Server Status")
+            .setColor(server.EmbedColor)
+            .setDescription(`${server.ServerIdentifier} is now online!`)
+            .setTimestamp()
+            .setThumbnail(server.ServerLogo);
+
+        server.bot.guilds.fetch(server.DiscordServerGuildID)
+            .then(guild => {
+                guild.channels.cache.get(server.StatusChannel)
+                    .send({ disableMentions: "all" , embed: onlineEmbed });
+            })
+            .catch(err => console.log(err));
+
+        server.bot.user.setActivity("Fetching data...");
+
+        server.playerCountUpdate = setInterval(() => {
+			try {
+				server.rcon.send("serverinfo", "RustMonitor", 88724);
+			} catch (err) {
+				logError(err);
+			}
+        }, 20000);
     });
 
     server.rcon.on('error', (err) => {
+        logError(err.message);
     });
+	
+	function logError(err) {
+		console.log(`[${server.bot.user.tag}] There was an issue while connecting to ${server.name}...\n\n---------[ERROR]---------\n\n${err}\n\n-------------------------\n`);
+	}
 
     server.rcon.on('disconnect', () => {
+		clearInterval(server.playerCountUpdate);
+
+        const offlineEmbed = new Discord.MessageEmbed()
+            .setTitle("Server Status")
+            .setColor(server.EmbedColor)
+            .setDescription(`${server.ServerIdentifier} has gone offline!`)
+            .setTimestamp()
+            .setThumbnail(server.ServerLogo);
+
+        if (server.connected)
+            server.bot.guilds.fetch(server.DiscordServerGuildID)
+                .then(guild => {
+                    guild.channels.cache.get(server.StatusChannel)
+                        .send({ disableMentions: "all" , embed: offlineEmbed });
+                })
+                .catch(err => console.log(err));
+        
+        server.connected = false;
+
         server.bot.user.setActivity("Currently offline...");
+
+        console.log(`[${server.bot.user.tag}] RCON disconnected from ${server.name}`);
+
         attemptConnection();
     });
 
     server.rcon.on('message', async (message) => {
         const mType = message["Type"];
+        const mContent = message["content"];
+        const mIdentifier = message["Identifier"];
 
         switch (mType) {
             case "Chat":
-                const mContent = message["content"];
-
                 const channel = mContent["Channel"];
                 const chatmessage = mContent["Message"];
                 const user = mContent["UserId"];
                 const username = mContent["Username"];
                 const time = new Date(mContent["Time"] * 1000);
-                const avatar = await fetchAvatarURI(user).catch(err => console.log(err));
 
                 const messageLog = new Discord.MessageEmbed()
                     .setFooter(server.ServerIdentifier)
@@ -56,7 +108,6 @@ config.Servers.forEach((server, index) => {
                         cleanText(chatmessage)
                     )
                     .setTimestamp(time)
-                    .setThumbnail(avatar);
 
                 server.bot.guilds.fetch(server.DiscordServerGuildID)
                         .then(guild => {
@@ -66,10 +117,26 @@ config.Servers.forEach((server, index) => {
                         .catch(err => console.log(err));
                     
                 break;
+            case "Generic":
+                if (mIdentifier === 88724) {
+                    const playersOnline = mContent["Players"] + mContent["Joining"];
+                    const maxPlayers = mContent["MaxPlayers"];
+                    const queuedPlayers = mContent["Queued"];
+
+                    server.bot.user.setActivity(
+                        `${playersOnline}/${maxPlayers} (${queuedPlayers})`,
+                        {
+                            type: "PLAYING"
+                        }
+                    )
+                }
+
+                break;
         }
-    })
+    });
 
     function attemptConnection() {
+        console.log(`[${server.bot.user.tag}] Attempting to connect to ${server.name}`);
         server.rcon.login();
     }
 
@@ -79,20 +146,6 @@ config.Servers.forEach((server, index) => {
 
         return cleanedText;
     }
-
-    function fetchAvatarURI(SteamID) {
-        return new Promise(async (resolve, reject) => {
-            const request = await fetch(`http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${config.SteamAPIKey}&steamids=${SteamID}`)
-                .catch((err) => {
-                    return reject(err);
-                });
-
-            if (request.status !== 200)
-                return reject(request.statusText);
-            
-            const data = await request.json();
-            
-            return resolve(data.response.players[0]["avatar"]);
-        });
-    }
 });
+
+
