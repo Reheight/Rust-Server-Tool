@@ -29,11 +29,16 @@ You will need to have Node JS installed on the machine that will be running this
 13. Find your Discord server in the server list and right click the icon and select "Copy ID".  
 14. Paste this ID inside of the config where it says "DiscordServerGuildID".  
 15. Right click the channel where you want the messages to go in your Discord and select "Copy ID".  
-16. Paste this ID inside of your config where it says "MessageLogChannel".  
-17. Ensure you have RCON enabled correctly (Learn more [here](https://www.rustafied.com/how-to-host-your-own-rust-server) by looking at launch options).  
-18. Inside of the config replace "IP" with the IP to your Rust server, "Port" with the port your RCON is on, and "RconPassword" with the password you set for RCON.  
-19. Save the config file.  
-20. Run start.bat  
+16. Paste this ID inside of your config where it says "MessageLogChannel".
+17. Right click on the channel where you want public status updates to be sent and select "Copy ID".
+18. Paste this ID inside of your config where it says "StatusChannel".
+19. Upload an image that represents the server to a CDN (such as [imgur](https://www.imgur.com)).
+20. Paste the link to the image inside of your config where it says "ServerLogo".
+21. Set the name for your server inside of your config where it says "ServerIdentifier".
+22. Ensure you have RCON enabled correctly (Learn more [here](https://www.rustafied.com/how-to-host-your-own-rust-server) by looking at launch options).  
+23. Inside of the config replace "IP" with the IP to your Rust server, "Port" with the port your RCON is on, and "RconPassword" with the password you set for RCON.  
+24. Save the config file.  
+25. Run start.bat  
   
 # Configuration  
 ```  
@@ -41,24 +46,28 @@ You will need to have Node JS installed on the machine that will be running this
   "INFORMATION": "You will need to obtain a Discord Bot Token (https://discord.com/developers/applications) and a Steam API Key (https://steamcommunity.com/dev/apikey) from the links provided!",
   "Servers": [
     {
-      "IP": "IP ADDRESS",
-      "Port": 28016,
-      "RconPassword": "PASSWORD",
-      "ServerIdentifier": "SERVER NAME",
-      "DiscordToken": "BOT TOKEN",
-      "DiscordServerGuildID": "GUILD IDENTIFIER",
-      "MessageLogChannel": "CHANNEL IDENTIFIER",
-      "EmbedColor": "#CE412B"
+      "IP": "SERVER IP ADDRESS",
+      "Port": RCON PORT,
+      "RconPassword": "RCON PASSWORD",
+      "DiscordToken": "DISCORD BOT TOKEN",
+      "DiscordServerGuildID": "GUILD ID",
+      "MessageLogChannel": "MESSAGE LOG CHANNEL ID",
+      "StatusChannel": "STATUS CHANNEL ID",
+      "ServerLogo": "LINK TO IMAGE",
+      "ServerIdentifier": "CUSTOM NAME FOR SERVER",
+      "EmbedColor": "#26ff4e"
     },
     {
-      "IP": "IP ADDRESS",
-      "Port": 28016,
-      "RconPassword": "PASSWORD",
-      "ServerIdentifier": "SERVER NAME",
-      "DiscordToken": "BOT TOKEN",
-      "DiscordServerGuildID": "GUILD IDENTIFIER",
-      "MessageLogChannel": "CHANNEL IDENTIFIER",
-      "EmbedColor": "#CE412B"
+      "IP": "SERVER IP ADDRESS",
+      "Port": RCON PORT,
+      "RconPassword": "RCON PASSWORD",
+      "DiscordToken": "DISCORD BOT TOKEN",
+      "DiscordServerGuildID": "GUILD ID",
+      "MessageLogChannel": "MESSAGE LOG CHANNEL ID",
+      "StatusChannel": "STATUS CHANNEL ID",
+      "ServerLogo": "LINK TO IMAGE",
+      "ServerIdentifier": "CUSTOM NAME FOR SERVER",
+      "EmbedColor": "#26ff4e"
     }
   ],
   "SteamAPIKey": "STEAM API KEY"
