@@ -13,8 +13,8 @@ config.Servers.forEach((server, index) => {
     server.connected = false;
     server.bot = new Discord.Client();
     server.bot.login(server.DiscordToken);
-	server.playerCountUpdate = null;
-    
+        server.playerCountUpdate = null;
+
     server.scheduler = null;
 
     server.bot.on('ready', () => {
@@ -44,24 +44,24 @@ config.Servers.forEach((server, index) => {
         server.bot.user.setActivity("Fetching data...");
 
         server.playerCountUpdate = setInterval(() => {
-			try {
-				server.rcon.send("serverinfo", "RustMonitor", 88724);
-			} catch (err) {
-				logError(err);
-			}
+                        try {
+                                server.rcon.send("serverinfo", "Reheight", 88724);
+                        } catch (err) {
+                                logError(err);
+                        }
         }, 20000);
     });
 
     server.rcon.on('error', (err) => {
         logError(err.message);
     });
-	
-	function logError(err) {
-		console.log(`[${server.bot.user.tag}] There was an issue while connecting to ${server.name}...\n\n---------[ERROR]---------\n\n${err}\n\n-------------------------\n`);
-	}
+
+        function logError(err) {
+                console.log(`[${server.bot.user.tag}] There was an issue while connecting to ${server.name}...\n\n---------[ERROR]---------\n\n${err}\n\n-------------------------\n`);
+        }
 
     server.rcon.on('disconnect', () => {
-		clearInterval(server.playerCountUpdate);
+                clearInterval(server.playerCountUpdate);
 
         const offlineEmbed = new Discord.MessageEmbed()
             .setTitle("Server Status")
@@ -77,7 +77,7 @@ config.Servers.forEach((server, index) => {
                         .send({ disableMentions: "all" , embed: offlineEmbed });
                 })
                 .catch(err => console.log(err));
-        
+
         server.connected = false;
 
         server.bot.user.setActivity("Currently offline...");
@@ -115,7 +115,7 @@ config.Servers.forEach((server, index) => {
                                 .send({ disableMentions: "all" , embed: messageLog });
                         })
                         .catch(err => console.log(err));
-                    
+
                 break;
             case "Generic":
                 if (mIdentifier === 88724) {
@@ -147,5 +147,3 @@ config.Servers.forEach((server, index) => {
         return cleanedText;
     }
 });
-
-
