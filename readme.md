@@ -44,6 +44,9 @@ You will need to have Node JS installed on the machine that will be running this
 ```  
 {
   "INFORMATION": "You will need to obtain a Discord Bot Token (https://discord.com/developers/applications) and a Steam API Key (https://steamcommunity.com/dev/apikey) from the links provided!",
+  "MasterBot": {
+    "DiscordToken": "BOT TOKEN"
+  },
   "Servers": [
     {
       "IP": "SERVER IP ADDRESS",
