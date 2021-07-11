@@ -4,7 +4,31 @@ const fetch = require("node-fetch");
 const config = require("./config");
 let serverStatus = [];
 
-config.Servers.forEach((server, index) => {
+function initiateGlobalBot() {
+  const totalPopulationBot = new Discord.Client();
+
+  totalPopulationBot.on("ready", () => {
+    setInterval(async () => {
+      const totalPop = await getTotalPopulation().catch(() => null);
+
+      if (!totalPop || totalPop == null) return;
+
+      totalPopulationBot.user.setActivity(
+        `${totalPop.playersOnline + totalPop.playersQueued} players online!`,
+        { type: "PLAYING" }
+      );
+    }, 20000);
+  });
+
+  totalPopulationBot.login(config.MasterBot.DiscordToken).then(() => {
+    totalPopulationBot.user.setActivity("Fetching data...");
+    console.log(`[${totalPopulationBot.user.tag}] is now online!`);
+  });
+}
+
+if (config.MasterBot && config.MasterBot.DiscordToken) initiateGlobalBot();
+
+config.Servers.forEach(async (server, index, array) => {
   server.name = `${server.IP}:${server.Port} (#${index + 1})`;
   server.rcon = new Client({
     ip: server.IP,
@@ -137,9 +161,9 @@ config.Servers.forEach((server, index) => {
         break;
       case "Generic":
         if (mIdentifier === 88724) {
-          const playersOnline = mContent["Players"] + mContent["Joining"];
+          const playersOnline = mContent["Players"];
           const maxPlayers = mContent["MaxPlayers"];
-          const queuedPlayers = mContent["Queued"];
+          const queuedPlayers = mContent["Queued"] + mContent["Joining"];
 
           serverStatus[index] = {
             playersOnline,
@@ -147,9 +171,9 @@ config.Servers.forEach((server, index) => {
           };
 
           server.bot.user.setActivity(
-            `${playersOnline}/${maxPlayers} (${queuedPlayers})`,
+            `(${playersOnline}/${maxPlayers}) ⇋ (${queuedPlayers} Joining)`,
             {
-              type: "WATCHING",
+              type: "PLAYING",
             }
           );
         }
@@ -187,25 +211,3 @@ async function getTotalPopulation() {
     });
   });
 }
-
-if (!config.MasterBot || !config.MasterBot.DiscordToken)
-    return;
-
-const totalPopulationBot = new Discord.Client();
-
-totalPopulationBot.on("ready", () => {
-  setInterval(async () => {
-    const totalPop = await getTotalPopulation().catch(() => null);
-
-    if (!totalPop || totalPop == null) {
-      return totalPopulationBot.user.setActivity("Fetching data...");
-    }
-
-    totalPopulationBot.user.setActivity(
-      `${totalPop.playersOnline} (${totalPop.playersQueued})`,
-      { type: "WATCHING" }
-    );
-  }, 20000);
-});
-
-totalPopulationBot.login(config.MasterBot.DiscordToken);
