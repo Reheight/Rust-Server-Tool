@@ -1,7 +1,7 @@
 {
   "INFORMATION": "You will need to obtain a Discord Bot Token (https://discord.com/developers/applications) and a Steam API Key (https://steamcommunity.com/dev/apikey) from the links provided!",
   "MasterBot": {
-    "DiscordToken": "ODA5NTQ2NDAzNjEyNTkwMTQx.YCWq1w.HnVulfv3XXyTmi2u2XVx-FpH8qY"
+    "DiscordToken": "BOT TOKEN"
   },
   "Servers": [
     {
