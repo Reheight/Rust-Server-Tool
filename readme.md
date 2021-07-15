@@ -30,8 +30,6 @@ You will need to have Node JS installed on the machine that will be running this
 14. Paste this ID inside of the config where it says "DiscordServerGuildID".  
 15. Right click the channel where you want the messages to go in your Discord and select "Copy ID".  
 16. Paste this ID inside of your config where it says "MessageLogChannel".
-17. Right click the channel where you want the status logs to go in your Discord and select "Copy ID".  
-16. Paste this ID inside of your config where it says "StatusChannel".
 18. Right click on the channel where you want public status updates to be sent and select "Copy ID".
 19. Paste this ID inside of your config where it says "StatusChannel".
 20. Upload an image that represents the server to a CDN (such as [imgur](https://www.imgur.com)).
