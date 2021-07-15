@@ -30,15 +30,17 @@ You will need to have Node JS installed on the machine that will be running this
 14. Paste this ID inside of the config where it says "DiscordServerGuildID".  
 15. Right click the channel where you want the messages to go in your Discord and select "Copy ID".  
 16. Paste this ID inside of your config where it says "MessageLogChannel".
-17. Right click on the channel where you want public status updates to be sent and select "Copy ID".
-18. Paste this ID inside of your config where it says "StatusChannel".
-19. Upload an image that represents the server to a CDN (such as [imgur](https://www.imgur.com)).
-20. Paste the link to the image inside of your config where it says "ServerLogo".
-21. Set the name for your server inside of your config where it says "ServerIdentifier".
-22. Ensure you have RCON enabled correctly (Learn more [here](https://www.rustafied.com/how-to-host-your-own-rust-server) by looking at launch options).  
-23. Inside of the config replace "IP" with the IP to your Rust server, "Port" with the port your RCON is on, and "RconPassword" with the password you set for RCON.  
-24. Save the config file.  
-25. Run start.bat  
+17. Right click the channel where you want the status logs to go in your Discord and select "Copy ID".  
+16. Paste this ID inside of your config where it says "StatusChannel".
+18. Right click on the channel where you want public status updates to be sent and select "Copy ID".
+19. Paste this ID inside of your config where it says "StatusChannel".
+20. Upload an image that represents the server to a CDN (such as [imgur](https://www.imgur.com)).
+21. Paste the link to the image inside of your config where it says "ServerLogo".
+22. Set the name for your server inside of your config where it says "ServerIdentifier".
+23. Ensure you have RCON enabled correctly (Learn more [here](https://www.rustafied.com/how-to-host-your-own-rust-server) by looking at launch options).  
+24. Inside of the config replace "IP" with the IP to your Rust server, "Port" with the port your RCON is on, and "RconPassword" with the password you set for RCON.  
+25. Save the config file.  
+26. Run start.bat  
   
 # Configuration  
 ```  
