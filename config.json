@@ -11,6 +11,7 @@
       "ServerIdentifier": "SERVER NAME",
       "DiscordToken": "BOT TOKEN",
       "DiscordServerGuildID": "GUILD IDENTIFIER",
+      "StatusChannel": "CHANNEL IDENTIFIER",
       "MessageLogChannel": "CHANNEL IDENTIFIER",
       "EmbedColor": "#CE412B"
     },
@@ -21,6 +22,7 @@
       "ServerIdentifier": "SERVER NAME",
       "DiscordToken": "BOT TOKEN",
       "DiscordServerGuildID": "GUILD IDENTIFIER",
+      "StatusChannel": "CHANNEL IDENTIFIER",
       "MessageLogChannel": "CHANNEL IDENTIFIER",
       "EmbedColor": "#CE412B"
     }
