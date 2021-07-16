@@ -37,7 +37,6 @@ config.Servers.forEach(async (server, index, array) => {
   });
   server.connected = false;
   server.bot = new Discord.Client();
-  server.bot.login(server.DiscordToken);
   server.playerCountUpdate = null;
 
   server.scheduler = null;
@@ -195,6 +194,8 @@ config.Servers.forEach(async (server, index, array) => {
 
     return cleanedText;
   }
+  
+  server.bot.login(server.DiscordToken);
 });
 
 async function getTotalPopulation() {
