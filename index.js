@@ -102,7 +102,7 @@ config.Servers.forEach(async (server, index, array) => {
       .setTimestamp()
       .setThumbnail(server.ServerLogo);
 
-    if (server.connected)
+    if (server.connected) {
       server.bot.guilds
         .fetch(server.DiscordServerGuildID)
         .then((guild) => {
@@ -112,13 +112,18 @@ config.Servers.forEach(async (server, index, array) => {
         })
         .catch((err) => console.log(err));
 
-    server.connected = false;
+        server.bot.user.setActivity("Currently offline...");
 
-    server.bot.user.setActivity("Currently offline...");
+        server.connected = false;
 
-    console.log(
-      `[${server.bot.user.tag}] RCON disconnected from ${server.name}`
-    );
+        console.log(
+          `[${server.bot.user.tag}] RCON disconnected from ${server.name}, will try to re-establish connection!`
+        );
+    } else {
+      console.log(
+        `[${server.bot.user.tag}] RCON attempting to establish connection to ${server.name}!`
+      );
+    }
 
     attemptConnection();
   });
