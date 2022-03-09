@@ -1,5 +1,6 @@
 const { Client } = require("rustrcon");
 const Discord = require("discord.js");
+const fetch = require("node-fetch");
 const config = require("./config");
 let serverStatus = [];
 
@@ -10,7 +11,9 @@ function initiateGlobalBot() {
     setInterval(async () => {
       const totalPop = await getTotalPopulation().catch(() => null);
 
-      if (!totalPop || totalPop == null) return;
+      if (!totalPop || totalPop == null || serverStatus.length <= 0 || !serverStatus) return;
+
+      updateStatusBots();
 
       totalPopulationBot.user.setActivity(
         `${totalPop.playersOnline + totalPop.playersQueued} players online!`,
@@ -26,6 +29,28 @@ function initiateGlobalBot() {
 }
 
 if (config.MasterBot && config.MasterBot.DiscordToken) initiateGlobalBot();
+else {
+    setInterval(() => {
+        updateStatusBots();
+    }, 20000);
+}
+
+function updateStatusBots() {
+    serverStatus.forEach(({ playersOnline, queuedPlayers, serverBot, maxPlayers, status }) => {
+      if (!serverBot || serverBot == null) return;
+
+      if (!status)
+          return serverBot.user.setActivity("Currently Offline...");
+
+      serverBot.user.setActivity(
+          `(${playersOnline}/${maxPlayers}) ⇋ (${queuedPlayers} Joining)`,
+          {
+            type: "PLAYING",
+          }
+        );
+    });
+}
+
 
 config.Servers.forEach(async (server, index, array) => {
   server.name = `${server.IP}:${server.Port} (#${index + 1})`;
@@ -66,7 +91,7 @@ config.Servers.forEach(async (server, index, array) => {
           .get(server.StatusChannel)
           .send({ disableMentions: "all", embed: onlineEmbed });
       })
-      .catch((err) => console.log(err));
+      .catch(() => console.log(`We are unable to log the connection status for (${server.ServerIdentifier}) - possibly the channel ID of ${server.MessageLogChannel} is invalid.`));
 
     server.bot.user.setActivity("Fetching data...");
 
@@ -92,7 +117,7 @@ config.Servers.forEach(async (server, index, array) => {
   server.rcon.on("disconnect", () => {
     clearInterval(server.playerCountUpdate);
 
-    serverStatus[index] = { playersOnline: 0, queuedPlayers: 0 };
+    serverStatus[index] = { playersOnline: 0, queuedPlayers: 0, serverBot: server.bot, maxPlayers: 0, status: false };
 
     const offlineEmbed = new Discord.MessageEmbed()
       .setTitle("Server Status")
@@ -109,7 +134,7 @@ config.Servers.forEach(async (server, index, array) => {
             .get(server.StatusChannel)
             .send({ disableMentions: "all", embed: offlineEmbed });
         })
-        .catch((err) => console.log(err));
+        .catch(() => console.log(`We are unable to log the connection status for (${server.ServerIdentifier}) - possibly the channel ID of ${server.MessageLogChannel} is invalid.`));
 
         server.bot.user.setActivity("Currently offline...");
 
@@ -134,6 +159,7 @@ config.Servers.forEach(async (server, index, array) => {
 
     switch (mType) {
       case "Chat":
+        return;
         const channel = mContent["Channel"];
         const chatmessage = mContent["Message"];
         const user = mContent["UserId"];
@@ -159,7 +185,7 @@ config.Servers.forEach(async (server, index, array) => {
               .get(server.MessageLogChannel)
               .send({ disableMentions: "all", embed: messageLog });
           })
-          .catch((err) => console.log(err));
+          .catch(() => console.log(`We are unable to log the message for (${server.ServerIdentifier}) - possibly the channel ID of ${server.MessageLogChannel} is invalid.`));
 
         break;
       case "Generic":
@@ -171,14 +197,31 @@ config.Servers.forEach(async (server, index, array) => {
           serverStatus[index] = {
             playersOnline,
             queuedPlayers,
+            serverBot: server.bot,
+            maxPlayers,
+            status: true
           };
+          
 
-          server.bot.user.setActivity(
-            `(${playersOnline}/${maxPlayers}) ⇋ (${queuedPlayers} Joining)`,
-            {
-              type: "PLAYING",
+          if (server.DynamicPopulation.Enabled) {
+            const diff = maxPlayers - playersOnline;
+
+            if (maxPlayers > server.DynamicPopulation.Minimum &&
+                playersOnline < server.DynamicPopulation.Minimum - server.DynamicPopulation.Threshold) {
+                  return server.rcon.send(`maxplayers ${server.DynamicPopulation.Minimum}`, "Reheight", 14483);
+                }
+
+            if (diff < server.DynamicPopulation.Threshold &&
+                maxPlayers > server.DynamicPopulation.Minimum) {
+                  return server.rcon.send(`maxplayers ${maxPlayers - server.DynamicPopulation.Interval}`, "Reheight", 14483);
+                }
+
+            if (diff <= server.DynamicPopulation.Threshold &&
+                maxPlayers < server.DynamicPopulation.Maximum) {
+                  return server.rcon.send(`maxplayers ${maxPlayers + server.DynamicPopulation.Interval}`, "Reheight", 14483);
             }
-          );
+          }
+          
         }
 
         break;
@@ -198,7 +241,7 @@ config.Servers.forEach(async (server, index, array) => {
 
     return cleanedText;
   }
-  
+
   server.bot.login(server.DiscordToken);
 });
 
