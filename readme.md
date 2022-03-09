@@ -58,7 +58,14 @@ You will need to have Node JS installed on the machine that will be running this
       "StatusChannel": "STATUS CHANNEL ID",
       "ServerLogo": "LINK TO IMAGE",
       "ServerIdentifier": "CUSTOM NAME FOR SERVER",
-      "EmbedColor": "#26ff4e"
+      "EmbedColor": "#26ff4e",
+      "DynamicPopulation": {
+          "Enabled": true,
+          "Threshold": 15,
+          "Interval": 15,
+          "Minimum": 50,
+          "Maximum": 150
+      }
     },
     {
       "IP": "SERVER IP ADDRESS",
@@ -70,7 +77,14 @@ You will need to have Node JS installed on the machine that will be running this
       "StatusChannel": "STATUS CHANNEL ID",
       "ServerLogo": "LINK TO IMAGE",
       "ServerIdentifier": "CUSTOM NAME FOR SERVER",
-      "EmbedColor": "#26ff4e"
+      "EmbedColor": "#26ff4e",
+      "DynamicPopulation": {
+          "Enabled": true,
+          "Threshold": 15,
+          "Interval": 15,
+          "Minimum": 50,
+          "Maximum": 150
+      }
     }
   ],
   "SteamAPIKey": "STEAM API KEY"
