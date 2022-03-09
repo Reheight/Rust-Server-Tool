@@ -13,7 +13,14 @@
       "DiscordServerGuildID": "GUILD IDENTIFIER",
       "StatusChannel": "CHANNEL IDENTIFIER",
       "MessageLogChannel": "CHANNEL IDENTIFIER",
-      "EmbedColor": "#CE412B"
+      "EmbedColor": "#CE412B",
+      "DynamicPopulation": {
+          "Enabled": true,
+          "Threshold": 15,
+          "Interval": 15,
+          "Minimum": 50,
+          "Maximum": 150
+      }
     },
     {
       "IP": "IP ADDRESS",
@@ -24,7 +31,14 @@
       "DiscordServerGuildID": "GUILD IDENTIFIER",
       "StatusChannel": "CHANNEL IDENTIFIER",
       "MessageLogChannel": "CHANNEL IDENTIFIER",
-      "EmbedColor": "#CE412B"
+      "EmbedColor": "#CE412B",
+      "DynamicPopulation": {
+          "Enabled": true,
+          "Threshold": 15,
+          "Interval": 15,
+          "Minimum": 50,
+          "Maximum": 150
+      }
     }
   ],
   "SteamAPIKey": "STEAM API KEY"
